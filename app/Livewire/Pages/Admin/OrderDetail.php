@@ -29,7 +29,7 @@ class OrderDetail extends Component
     {
         $newStatus = \App\Enums\OrderStatus::from($value);
         $action->handle($this->order, $newStatus);
-        
+
         \Flux\Flux::toast('Bestelstatus succesvol bijgewerkt.');
     }
 

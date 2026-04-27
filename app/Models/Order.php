@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $fillable = [
         'user_id',
@@ -41,7 +42,7 @@ class Order extends Model
     protected function formattedTotal(): Attribute
     {
         return Attribute::make(
-            get: fn () => '€ ' . number_format($this->total_amount, 2, ',', '.'),
+            get: fn() => '€ ' . number_format($this->total_amount, 2, ',', '.'),
         );
     }
 

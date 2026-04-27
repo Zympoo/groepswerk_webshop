@@ -43,7 +43,7 @@ class CategoryIndex extends Component
     {
         return Category::query()
             ->when($this->showDeleted, fn($query) => $query->withTrashed())
-            ->when($this->search, fn ($query) => $query->where('name', 'like', "%{$this->search}%"))
+            ->when($this->search, fn($query) => $query->where('name', 'like', "%{$this->search}%"))
             ->withCount('products')
             ->latest()
             ->paginate(10);
