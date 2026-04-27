@@ -15,6 +15,7 @@ class ProductIndex extends Component
     use WithPagination;
 
     public string $search = '';
+    public bool $showDeleted = false;
 
     /**
      * Handle product deletion.
@@ -25,11 +26,24 @@ class ProductIndex extends Component
         Flux::toast('Product succesvol verwijderd.');
     }
 
+    /**
+     * Restore a soft-deleted product.
+     */
+    public function restore(int $id, \App\Actions\Products\RestoreProductAction $action): void
+    {
+        if ($action->handle($id)) {
+            Flux::toast('Product succesvol hersteld.');
+        } else {
+            Flux::toast('Fout bij het herstellen van het product.', variant: 'danger');
+        }
+    }
+
     #[Computed]
     public function products()
     {
         return Product::query()
             ->with('category')
+            ->when($this->showDeleted, fn($query) => $query->withTrashed())
             ->when($this->search, fn($query) => $query->where('name', 'like', "%{$this->search}%"))
             ->latest()
             ->paginate(10);
@@ -49,8 +63,11 @@ class ProductIndex extends Component
                     </flux:button>
                 </div>
 
-                <div class="mb-4">
-                    <flux:input wire:model.live.debounce.300ms="search" placeholder="Zoek op naam..." icon="magnifying-glass" />
+                <div class="mb-4 flex items-center justify-between gap-4">
+                    <div class="flex-1">
+                        <flux:input wire:model.live.debounce.300ms="search" placeholder="Zoek op naam..." icon="magnifying-glass" />
+                    </div>
+                    <flux:switch wire:model.live="showDeleted" label="Toon verwijderde items" />
                 </div>
 
                 <div class="bg-white dark:bg-forest-black shadow rounded-lg overflow-hidden">
@@ -65,10 +82,15 @@ class ProductIndex extends Component
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-forest-black divide-y divide-gray-200 dark:divide-teal-gray">
-                            @forelse($this->products as $product)
-                                <tr wire:key="{{ $product->id }}">
+                             @forelse($this->products as $product)
+                                <tr wire:key="{{ $product->id }}" class="{{ $product->trashed() ? 'opacity-50' : '' }}">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $product->name }}</div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                            {{ $product->name }}
+                                            @if($product->trashed())
+                                                <span class="ml-2 text-xs text-red-500 font-bold uppercase">(Verwijderd)</span>
+                                            @endif
+                                        </div>
                                         <div class="text-xs text-gray-500 dark:text-silver-teal">{{ $product->slug }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-silver-teal">
@@ -83,8 +105,12 @@ class ProductIndex extends Component
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                        <flux:button href="{{ route('dashboard.products.edit', $product) }}" icon="pencil-square" variant="ghost" size="sm" />
-                                        <flux:button wire:click="delete({{ $product->id }})" wire:confirm="Weet je zeker dat je dit product wilt verwijderen?" icon="trash" variant="danger" size="sm" />
+                                        @if($product->trashed())
+                                            <flux:button wire:click="restore({{ $product->id }})" icon="arrow-path" variant="ghost" size="sm" />
+                                        @else
+                                            <flux:button href="{{ route('dashboard.products.edit', $product) }}" icon="pencil-square" variant="ghost" size="sm" />
+                                            <flux:button wire:click="delete({{ $product->id }})" wire:confirm="Weet je zeker dat je dit product wilt verwijderen?" icon="trash" variant="danger" size="sm" />
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

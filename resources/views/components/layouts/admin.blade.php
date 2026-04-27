@@ -37,10 +37,6 @@
                     class="flex items-center gap-3 px-4 py-2 text-silver-teal hover:bg-deep-teal hover:text-white rounded-lg transition-colors">
                     Bestellingen
                 </a>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2 text-silver-teal hover:bg-deep-teal hover:text-white rounded-lg transition-colors">
-                    Klanten
-                </a>
             </nav>
 
             <div class="p-4 border-t border-teal-gray text-xs text-cool-gray">
