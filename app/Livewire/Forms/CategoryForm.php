@@ -24,7 +24,7 @@ class CategoryForm extends Form
         return [
             'name' => 'required|min:3|max:255',
             'slug' => [
-                'required',
+                'nullable',
                 'max:255',
                 Rule::unique('categories', 'slug')->ignore($this->category?->id),
             ],

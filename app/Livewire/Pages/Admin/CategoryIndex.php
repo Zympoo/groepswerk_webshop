@@ -22,7 +22,7 @@ class CategoryIndex extends Component
     public function delete(Category $category): void
     {
         $category->delete();
-        // Flux::toast('Categorie succesvol verwijderd.'); // Assuming Flux toast helper
+        Flux::toast('Categorie succesvol verwijderd.');
     }
 
     #[Computed]

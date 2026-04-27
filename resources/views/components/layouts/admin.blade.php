@@ -62,6 +62,8 @@
             <div class="p-8">
                 {{ $slot }}
             </div>
+            
+            <flux:toast />
         </main>
     </div>
 
