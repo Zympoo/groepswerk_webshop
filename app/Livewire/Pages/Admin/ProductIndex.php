@@ -106,10 +106,16 @@ class ProductIndex extends Component
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                         @if($product->trashed())
-                                            <flux:button wire:click="restore({{ $product->id }})" icon="arrow-path" variant="ghost" size="sm" />
+                                            <flux:tooltip content="Herstellen">
+                                                <flux:button wire:click="restore({{ $product->id }})" icon="arrow-path" variant="ghost" size="sm" />
+                                            </flux:tooltip>
                                         @else
-                                            <flux:button href="{{ route('dashboard.products.edit', $product) }}" icon="pencil-square" variant="ghost" size="sm" />
-                                            <flux:button wire:click="delete({{ $product->id }})" wire:confirm="Weet je zeker dat je dit product wilt verwijderen?" icon="trash" variant="danger" size="sm" />
+                                            <flux:tooltip content="Bewerken">
+                                                <flux:button href="{{ route('dashboard.products.edit', $product) }}" icon="pencil-square" variant="ghost" size="sm" />
+                                            </flux:tooltip>
+                                            <flux:tooltip content="Verwijderen">
+                                                <flux:button wire:click="delete({{ $product->id }})" wire:confirm="Weet je zeker dat je dit product wilt verwijderen?" icon="trash" variant="danger" size="sm" />
+                                            </flux:tooltip>
                                         @endif
                                     </td>
                                 </tr>

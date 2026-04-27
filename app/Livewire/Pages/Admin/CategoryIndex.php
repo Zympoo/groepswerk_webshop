@@ -93,10 +93,16 @@ class CategoryIndex extends Component
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-silver-teal">{{ $category->products_count }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                         @if($category->trashed())
-                                            <flux:button wire:click="restore({{ $category->id }})" icon="arrow-path" variant="ghost" size="sm" />
+                                            <flux:tooltip content="Herstellen">
+                                                <flux:button wire:click="restore({{ $category->id }})" icon="arrow-path" variant="ghost" size="sm" />
+                                            </flux:tooltip>
                                         @else
-                                            <flux:button href="{{ route('dashboard.categories.edit', $category) }}" icon="pencil-square" variant="ghost" size="sm" />
-                                            <flux:button wire:click="delete({{ $category->id }})" wire:confirm="Weet je zeker dat je deze categorie wilt verwijderen?" icon="trash" variant="danger" size="sm" />
+                                            <flux:tooltip content="Bewerken">
+                                                <flux:button href="{{ route('dashboard.categories.edit', $category) }}" icon="pencil-square" variant="ghost" size="sm" />
+                                            </flux:tooltip>
+                                            <flux:tooltip content="Verwijderen">
+                                                <flux:button wire:click="delete({{ $category->id }})" wire:confirm="Weet je zeker dat je deze categorie wilt verwijderen?" icon="trash" variant="danger" size="sm" />
+                                            </flux:tooltip>
                                         @endif
                                     </td>
                                 </tr>
