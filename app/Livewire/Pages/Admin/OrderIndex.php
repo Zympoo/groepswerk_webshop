@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Admin;
 
 use App\Models\Order;
 use App\Enums\OrderStatus;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
@@ -16,6 +17,11 @@ class OrderIndex extends Component
 
     public string $search = '';
     public string $statusFilter = '';
+
+    public function mount(): void
+    {
+        Gate::authorize('viewAny', Order::class);
+    }
 
     #[Computed]
     public function orders()

@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Admin;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Computed;
@@ -15,6 +16,8 @@ class OrderDetail extends Component
 
     public function mount(Order $order): void
     {
+        Gate::authorize('view', $order);
+
         $this->order = $order->load(['user', 'details.product']);
         $this->status = $order->status->value;
     }
