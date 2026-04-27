@@ -25,23 +25,17 @@ Route::get('/', function () {
 Route::get('/products', ProductCatalog::class)->name('products.index');
 
 /**
- * 2. BEVEILIGD KLANTENPORTAAL
- * Routes die alleen toegankelijk zijn voor ingelogde gebruikers.
+ * 2. BEVEILIGD DASHBOARD & ADMIN BACKEND
+ * Alle beheer- en dashboard-routes vallen onder het /dashboard prefix.
  */
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Het standaard dashboard van de starter kit.
-    Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
-});
-
-/**
- * 3. ADMIN BACKEND AREA
- * Toegankelijk via /admin prefix voor beheerdoeleinden.
- */
-Route::prefix('admin')
+Route::prefix('dashboard')
     ->name('admin.')
     ->middleware(['auth', 'verified'])
     ->group(function () {
-        Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
+        Route::livewire('/', AdminDashboard::class)->name('dashboard');
+        Route::livewire('/productbeheer', \App\Livewire\Pages\Admin\ProductIndex::class)->name('products.index');
     });
+
+// Hier komen later de subpagina's voor beheer (bijv. productbeheer)
 
 require __DIR__ . '/settings.php';
