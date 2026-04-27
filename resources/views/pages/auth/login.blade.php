@@ -55,5 +55,15 @@
                 <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
             </div>
         @endif
+
+        <div class="flex flex-col gap-2">
+            <flux:button :href="route('social.redirect', 'google')" class="w-full bg-red-500 text-white">
+                Log in met Google
+            </flux:button>
+
+            <flux:button :href="route('social.redirect', 'github')" class="w-full bg-gray-900 text-white">
+                Log in met GitHub
+            </flux:button>
+        </div>
     </div>
 </x-layouts::auth>
