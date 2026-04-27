@@ -11,6 +11,9 @@ use Illuminate\Validation\Rules\Password;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 use Laravel\Socialite\Two\GithubProvider;
 use Laravel\Socialite\Two\GoogleProvider;
+use Illuminate\Support\Facades\Event;
+use App\Events\OrderPaid;
+use App\Listeners\SendOrderConfirmationEmail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +50,12 @@ class AppServiceProvider extends ServiceProvider
                     ->setHttpClient(new Client(['verify' => false]));
             });
         }
+
+        // Register event-driven listeners
+        Event::listen(
+            OrderPaid::class,
+            SendOrderConfirmationEmail::class,
+        );
     }
 
     /**
@@ -60,7 +69,8 @@ class AppServiceProvider extends ServiceProvider
             app()->isProduction(),
         );
 
-        Password::defaults(fn (): ?Password => app()->isProduction()
+        Password::defaults(
+            fn(): ?Password => app()->isProduction()
             ? Password::min(12)
                 ->mixedCase()
                 ->letters()

@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $fillable = [
         'category_id',
@@ -43,7 +44,7 @@ class Product extends Model
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => '€ ' . number_format($this->price, 2, ',', '.'),
+            get: fn() => '€ ' . number_format($this->price, 2, ',', '.'),
         );
     }
 
