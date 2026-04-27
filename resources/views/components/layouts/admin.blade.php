@@ -33,8 +33,8 @@
                     class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('dashboard.categories.*') ? 'text-mongo-green bg-deep-teal' : 'text-silver-teal hover:bg-deep-teal hover:text-white' }} rounded-lg transition-colors">
                     Categorieën
                 </a>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2 text-silver-teal hover:bg-deep-teal hover:text-white rounded-lg transition-colors">
+                <a href="{{ route('dashboard.orders.index') }}"
+                    class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('dashboard.orders.*') ? 'text-mongo-green bg-deep-teal' : 'text-silver-teal hover:bg-deep-teal hover:text-white' }} rounded-lg transition-colors">
                     Bestellingen
                 </a>
             </nav>
