@@ -20,13 +20,17 @@
             </div>
 
             <nav class="flex-1 p-4 space-y-2">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="flex items-center gap-3 px-4 py-2 text-mongo-green bg-deep-teal rounded-lg font-medium">
+                <a href="{{ route('dashboard.index') }}"
+                    class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('dashboard.index') ? 'text-mongo-green bg-deep-teal' : 'text-silver-teal hover:bg-deep-teal hover:text-white' }} rounded-lg font-medium">
                     <span>Dashboard</span>
                 </a>
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-2 text-silver-teal hover:bg-deep-teal hover:text-white rounded-lg transition-colors">
+                <a href="{{ route('dashboard.products.index') }}"
+                    class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('dashboard.products.*') ? 'text-mongo-green bg-deep-teal' : 'text-silver-teal hover:bg-deep-teal hover:text-white' }} rounded-lg transition-colors">
                     Productbeheer
+                </a>
+                <a href="{{ route('dashboard.categories.index') }}"
+                    class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('dashboard.categories.*') ? 'text-mongo-green bg-deep-teal' : 'text-silver-teal hover:bg-deep-teal hover:text-white' }} rounded-lg transition-colors">
+                    Categorieën
                 </a>
                 <a href="#"
                     class="flex items-center gap-3 px-4 py-2 text-silver-teal hover:bg-deep-teal hover:text-white rounded-lg transition-colors">

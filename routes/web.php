@@ -29,11 +29,14 @@ Route::get('/products', ProductCatalog::class)->name('products.index');
  * Alle beheer- en dashboard-routes vallen onder het /dashboard prefix.
  */
 Route::prefix('dashboard')
-    ->name('admin.')
-    ->middleware(['auth', 'verified'])
+    ->name('dashboard.')
+    ->middleware(['auth', 'verified', 'admin'])
     ->group(function () {
-        Route::livewire('/', AdminDashboard::class)->name('dashboard');
-        Route::livewire('/productbeheer', \App\Livewire\Pages\Admin\ProductIndex::class)->name('products.index');
+        Route::livewire('/', AdminDashboard::class)->name('index');
+        Route::livewire('/products', \App\Livewire\Pages\Admin\ProductIndex::class)->name('products.index');
+        Route::livewire('/categories', \App\Livewire\Pages\Admin\CategoryIndex::class)->name('categories.index');
+        Route::livewire('/categories/create', \App\Livewire\Pages\Admin\CategoryUpsert::class)->name('categories.create');
+        Route::livewire('/categories/{category}/edit', \App\Livewire\Pages\Admin\CategoryUpsert::class)->name('categories.edit');
     });
 
 // Hier komen later de subpagina's voor beheer (bijv. productbeheer)
