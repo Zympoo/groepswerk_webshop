@@ -11,10 +11,23 @@ use Livewire\Attributes\Computed;
 class OrderDetail extends Component
 {
     public Order $order;
+    public string $status;
 
     public function mount(Order $order): void
     {
         $this->order = $order->load(['user', 'details.product']);
+        $this->status = $order->status->value;
+    }
+
+    /**
+     * Handle status updates.
+     */
+    public function updatedStatus($value, \App\Actions\Orders\UpdateOrderStatusAction $action): void
+    {
+        $newStatus = \App\Enums\OrderStatus::from($value);
+        $action->handle($this->order, $newStatus);
+        
+        \Flux\Flux::toast('Bestelstatus succesvol bijgewerkt.');
     }
 
     #[Computed]
@@ -43,6 +56,21 @@ class OrderDetail extends Component
                             };
                         @endphp
                         <flux:badge :variant="$badgeVariant" size="lg">{{ $order->status->label() }}</flux:badge>
+                    </div>
+                </div>
+
+                <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2">
+                        <div class="bg-white dark:bg-forest-black shadow rounded-lg border border-gray-200 dark:border-teal-gray p-4 flex items-center justify-between">
+                            <div class="text-sm font-medium text-gray-700 dark:text-silver-teal">Status Bijwerken:</div>
+                            <div class="w-64">
+                                <flux:select wire:model.live="status">
+                                    @foreach(\App\Enums\OrderStatus::cases() as $s)
+                                        <flux:select.option value="{{ $s->value }}">{{ $s->label() }}</flux:select.option>
+                                    @endforeach
+                                </flux:select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
