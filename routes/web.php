@@ -40,6 +40,7 @@ Route::prefix('dashboard')
         Route::livewire('/categories/create', \App\Livewire\Pages\Admin\CategoryUpsert::class)->name('categories.create');
         Route::livewire('/categories/{category}/edit', \App\Livewire\Pages\Admin\CategoryUpsert::class)->name('categories.edit');
         Route::livewire('/orders', \App\Livewire\Pages\Admin\OrderIndex::class)->name('orders.index');
+        Route::livewire('/orders/{order}', \App\Livewire\Pages\Admin\OrderDetail::class)->name('orders.show');
     });
 
 // Hier komen later de subpagina's voor beheer (bijv. productbeheer)

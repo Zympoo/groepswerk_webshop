@@ -93,7 +93,7 @@ class OrderIndex extends Component
                                         {{ $order->formattedTotal }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <flux:button variant="ghost" icon="eye" size="sm" />
+                                        <flux:button href="{{ route('dashboard.orders.show', $order) }}" variant="ghost" icon="eye" size="sm" />
                                     </td>
                                 </tr>
                             @empty
