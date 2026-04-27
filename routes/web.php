@@ -30,7 +30,7 @@ Route::get('/products', ProductCatalog::class)->name('products.index');
  */
 Route::prefix('dashboard')
     ->name('admin.')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'admin'])
     ->group(function () {
         Route::livewire('/', AdminDashboard::class)->name('dashboard');
         Route::livewire('/productbeheer', \App\Livewire\Pages\Admin\ProductIndex::class)->name('products.index');
