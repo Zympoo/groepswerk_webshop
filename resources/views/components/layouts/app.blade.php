@@ -11,8 +11,8 @@
 
 <body class="font-sans antialiased text-black bg-white">
 
-    <header class="bg-forest-black text-white pt-6 pb-20 px-4 sm:px-6 lg:px-8 border-b border-teal-gray">
-        <div class="max-w-7xl mx-auto flex items-center justify-between mb-16">
+    <header class="bg-forest-black text-white pt-6 pb-6 px-4 sm:px-6 lg:px-8 border-b border-teal-gray">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="/" class="text-mongo-green font-serif text-2xl font-bold tracking-tight">
                 Webshop<span class="text-white">.</span>
             </a>
@@ -37,14 +37,6 @@
                     @endauth
                 </nav>
             </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto">
-            <span class="tech-label text-mongo-green block mb-4">Systeem Online</span>
-            <h1 class="font-serif text-[64px] md:text-[96px] font-normal leading-tight mb-6">
-                Ontwikkel met <br>
-                <span class="text-white mongo-underline">Autoriteit.</span>
-            </h1>
         </div>
     </header>
 

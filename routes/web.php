@@ -17,12 +17,11 @@ Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']
  * 1. PUBLIEKE FRONTEND
  * Bezoekers worden automatisch naar de productcatalogus geleid.
  */
-Route::get('/', function () {
-    return redirect()->route('products.index');
-})->name('home');
+Route::redirect('/', '/products');
 
 // Route voor de productcatalogus met realtime filtering.
-Route::get('/products', ProductCatalog::class)->name('products.index');
+Route::livewire('/products', 'pages::products.index');
+Route::livewire('/products/{product:slug}', 'pages::products.show');
 
 /**
  * 2. BEVEILIGD DASHBOARD & ADMIN BACKEND
