@@ -21,6 +21,7 @@ Route::redirect('/', '/products');
 
 // Route voor de productcatalogus met realtime filtering.
 Route::livewire('/products', 'pages::products.index');
+Route::livewire('/products/{product:slug}', 'pages::products.show');
 
 /**
  * 2. BEVEILIGD DASHBOARD & ADMIN BACKEND

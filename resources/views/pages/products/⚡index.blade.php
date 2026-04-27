@@ -5,16 +5,28 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Product;
 
 new #[Layout('components.layouts.app')]
 class extends Component {
+    use WithPagination;
 
     #[Url(as: 'q')]
     public string $search = '';
 
     #[Url]
     public ?int $category = null;
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedCategory()
+    {
+        $this->resetPage();
+    }
 
     #[Computed]
     public function products()
@@ -29,7 +41,7 @@ class extends Component {
                 $query->where('category_id', $this->category);
             })
             ->latest()
-            ->get();
+            ->paginate(9);
     }
 
     #[Computed]
@@ -91,7 +103,7 @@ class extends Component {
 
                     <div class="p-6 flex flex-col flex-1">
                         <span class="tech-label text-cool-gray mb-1 block">
-                            {{ $product->category->name ?? 'Geen categorie' }}
+                            {{ $product->category?->name ?? 'Geen categorie' }}
                         </span>
 
                         <h3 class="text-[24px] font-medium mb-2">
@@ -121,6 +133,9 @@ class extends Component {
                     Geen producten gevonden.
                 </p>
             @endforelse
+        </div>
+        <div class="mt-10 flex justify-center">
+            {{ $this->products->links() }}
         </div>
     </div>
 </div>
