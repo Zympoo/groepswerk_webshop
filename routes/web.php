@@ -20,8 +20,10 @@ Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']
 Route::redirect('/', '/products');
 
 // Route voor de productcatalogus met realtime filtering.
-Route::livewire('/products', 'pages::products.index');
+Route::livewire('/products', 'pages::products.index')->name('home');
 Route::livewire('/products/{product:slug}', 'pages::products.show');
+
+Route::livewire('/cart', 'pages::cart.overview');
 
 /**
  * 2. BEVEILIGD DASHBOARD & ADMIN BACKEND

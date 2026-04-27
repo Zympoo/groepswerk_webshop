@@ -120,11 +120,6 @@ class extends Component {
                             <span class="text-[20px] font-medium">
                                 €{{ number_format($product->price, 2, ',', '.') }}
                             </span>
-
-                            <button
-                                class="bg-mongo-dark-green text-white rounded-full px-6 py-2 font-bold hover:scale-105 transition-transform shadow-md">
-                                In winkelmandje
-                            </button>
                         </div>
                     </div>
                 </div>
