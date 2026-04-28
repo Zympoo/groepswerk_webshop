@@ -96,9 +96,21 @@ class extends Component {
                     Totaal: €{{ number_format($this->total, 2, ',', '.') }}
                 </p>
 
-                <button class="mt-4 bg-mongo-dark-green text-white rounded-full px-6 py-3 font-bold">
-                    Afrekenen
-                </button>
+                @if($this->cartItems->isNotEmpty())
+                    <a
+                        href="/checkout"
+                        class="mt-4 inline-block bg-mongo-dark-green text-white rounded-full px-6 py-3 font-bold"
+                    >
+                        Afrekenen
+                    </a>
+                @else
+                    <button
+                        disabled
+                        class="mt-4 bg-gray-300 text-white rounded-full px-6 py-3 font-bold cursor-not-allowed"
+                    >
+                        Afrekenen
+                    </button>
+                @endif
             </div>
         </div>
 
