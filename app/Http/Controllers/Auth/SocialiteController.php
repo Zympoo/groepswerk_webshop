@@ -20,7 +20,7 @@ class SocialiteController extends Controller
     {
         $socialUser = Socialite::driver($provider)->user();
 
-        // 1. Bestaat deze social account al?
+        // 1. Bestaat social account al?
         $account = SocialAccount::where('provider', $provider)
             ->where('provider_id', $socialUser->getId())
             ->first();
@@ -28,10 +28,14 @@ class SocialiteController extends Controller
         if ($account) {
             Auth::login($account->user);
 
-            return redirect('/dashboard');
+            return redirect(
+                $account->user->isAdmin()
+                    ? '/dashboard'
+                    : '/products'
+            );
         }
 
-        // 2. Zoek user via email (optioneel koppelen)
+        // 2. Zoek user via email
         $user = null;
 
         if ($socialUser->getEmail()) {
@@ -56,6 +60,10 @@ class SocialiteController extends Controller
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect(
+            $user->isAdmin()
+                ? '/dashboard'
+                : '/products'
+        );
     }
 }
