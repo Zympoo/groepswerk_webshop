@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(SocialAccount::class);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role?->value === 'admin';
+    }
 }
