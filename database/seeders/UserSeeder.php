@@ -17,51 +17,29 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin user
+        // 1 Admin user (fixed credentials)
         User::create([
             'name' => 'Admin',
-            'role_id' => 1, // Traditional ID for legacy support
-            'role' => UserRole::ADMIN, // Modern Enum usage
+            'role' => UserRole::ADMIN,
             'email' => 'admin@webshop.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('12345678'),
         ]);
 
-        // Customer users
+        // 2 Test customers
         User::create([
-            'name' => 'Bart',
-            'role_id' => 2,
+            'name' => 'Customer One',
             'role' => UserRole::CUSTOMER,
-            'email' => 'bart@gmail.com',
+            'email' => 'customer1@test.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('12345678'),
         ]);
 
         User::create([
-            'name' => 'John',
-            'role_id' => 2,
+            'name' => 'Customer Two',
             'role' => UserRole::CUSTOMER,
-            'email' => 'john@gmail.com',
+            'email' => 'customer2@test.com',
             'email_verified_at' => Carbon::now(),
-            'password' => Hash::make('12345678'),
-        ]);
-
-        // Extra user seen in screenshot
-        User::create([
-            'name' => 'kamil',
-            'role_id' => 1, // Seems to be an admin in the screenshot? Or just an error.
-            'role' => UserRole::ADMIN,
-            'email' => 'kamil@test.com',
-            'email_verified_at' => null,
-            'password' => Hash::make('12345678'),
-        ]);
-
-        User::create([
-            'name' => 'Warre',
-            'role_id' => 1, // Seems to be an admin in the screenshot? Or just an error.
-            'role' => UserRole::ADMIN,
-            'email' => 'warre@test.com',
-            'email_verified_at' => null,
             'password' => Hash::make('12345678'),
         ]);
 
