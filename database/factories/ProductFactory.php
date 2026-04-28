@@ -15,19 +15,14 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(3, true);
-        
-        // Senior logic: Generate and save placeholder image
-        $imageName = $this->generatePlaceholderImage($name);
-
         return [
             'category_id' => Category::inRandomOrder()->first()?->id ?? Category::factory(),
-            'name' => $name,
-            'slug' => Str::slug($name),
+            'name' => $name = $this->faker->unique()->words(3, true),
+            'slug' => fn (array $attributes) => Str::slug($attributes['name'] ?? $name),
             'description' => $this->faker->paragraph,
             'price' => $this->faker->numberBetween(1000, 50000) / 100, // Decimal-safe random price
             'stock' => $this->faker->numberBetween(0, 100),
-            'image' => $imageName,
+            'image' => fn (array $attributes) => $this->generatePlaceholderImage($attributes['name'] ?? $name),
             'is_active' => true,
         ];
     }
@@ -48,9 +43,8 @@ class ProductFactory extends Factory
         $path = "{$directory}/{$filename}";
 
         try {
-            // Generate placeholder image from placehold.co
-            // Using a background color and text for better visual representation
-            $response = Http::withoutVerifying()->get("https://placehold.co/600x400/000000/FFFFFF/png?text=" . urlencode($name));
+            // Generate realistic sneaker image from loremflickr
+            $response = Http::withoutVerifying()->get("https://loremflickr.com/600/400/sneaker");
             
             if ($response->successful()) {
                 Storage::disk('public')->put($path, $response->body());

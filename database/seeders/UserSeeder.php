@@ -43,5 +43,23 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
+        // Extra admins from user request
+        User::create([
+            'name' => 'kamil',
+            'role_id' => 1, 
+            'role' => UserRole::ADMIN,
+            'email' => 'kamil@test.com',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('12345678'),
+        ]);
+
+        User::create([
+            'name' => 'Warre',
+            'role_id' => 1, 
+            'role' => UserRole::ADMIN,
+            'email' => 'warre@test.com',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('12345678'),
+        ]);
     }
 }
