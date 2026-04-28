@@ -7,10 +7,13 @@ use App\Events\OrderPaid;
 use App\Models\Order;
 use App\Services\CartService;
 use App\Services\StripeService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
+    use AuthorizesRequests;
+
     public function success(Request $request, StripeService $stripe, CartService $cartService)
     {
         $sessionId = $request->query('session_id');
@@ -45,6 +48,38 @@ class CheckoutController extends Controller
         }
 
         return view('checkout.success', compact('order'));
+    }
+
+    public function pay(Order $order, StripeService $stripe)
+    {
+        $this->authorize('view', $order);
+
+        if ($order->status !== OrderStatus::PENDING) {
+            abort(403, 'Order kan niet opnieuw betaald worden.');
+        }
+
+        $lineItems = $order->details->map(fn ($item) => [
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => [
+                    'name' => $item->product_name_snapshot,
+                ],
+                'unit_amount' => $item->price_snapshot * 100,
+            ],
+            'quantity' => $item->quantity,
+        ])->toArray();
+
+        $session = $stripe->createCheckoutSession(
+            $lineItems,
+            route('checkout.success'),
+            route('checkout.cancel')
+        );
+
+        $order->update([
+            'stripe_session_id' => $session->id,
+        ]);
+
+        return redirect()->away($session->url);
     }
 
     public function cancel()

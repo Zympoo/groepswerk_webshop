@@ -2,21 +2,27 @@
 
 namespace App\Providers;
 
+use App\Events\OrderPaid;
+use App\Listeners\SendOrderConfirmationEmail;
+use App\Models\Order;
+use App\Policies\OrderPolicy;
 use Carbon\CarbonImmutable;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 use Laravel\Socialite\Two\GithubProvider;
 use Laravel\Socialite\Two\GoogleProvider;
-use Illuminate\Support\Facades\Event;
-use App\Events\OrderPaid;
-use App\Listeners\SendOrderConfirmationEmail;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        Order::class => OrderPolicy::class,
+    ];
+
     /**
      * Register any application services.
      */
@@ -70,7 +76,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Password::defaults(
-            fn(): ?Password => app()->isProduction()
+            fn (): ?Password => app()->isProduction()
             ? Password::min(12)
                 ->mixedCase()
                 ->letters()
