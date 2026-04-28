@@ -19,6 +19,11 @@ pest()->extend(TestCase::class)
     ->beforeEach(fn () => (new Database\Seeders\RoleSeeder())->run())
     ->in('Feature');
 
+pest()->extend(TestCase::class)
+    ->use(RefreshDatabase::class)
+    ->beforeEach(fn () => (new Database\Seeders\RoleSeeder())->run())
+    ->in('Unit');
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
