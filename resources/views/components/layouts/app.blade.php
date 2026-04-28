@@ -19,22 +19,29 @@
 
             <div class="flex items-center gap-8">
                 <nav class="hidden md:flex gap-8 font-medium text-[16px] items-center">
+
                     <a href="/products" class="hover:text-action-blue transition-colors">Producten</a>
                     <a href="/cart" class="hover:text-action-blue transition-colors">Winkelmandje</a>
 
                     @auth
-                        <a href="/dashboard" class="hover:text-action-blue transition-colors">Mijn orders</a>
-
-                        @if(auth()->user()->role === 'admin')
-                            <a href="/admin/dashboard"
-                                class="bg-mongo-dark-green text-white px-5 py-2 rounded-full text-sm font-bold hover:scale-105 transition-transform border border-mongo-green shadow-[0px_1px_6px_rgba(0,237,100,0.2)]">
-                                Admin Paneel
+                        @if(auth()->user()->role === \App\Enums\UserRole::ADMIN)
+                            <a href="/dashboard" class="hover:text-action-blue transition-colors">
+                                Dashboard
                             </a>
                         @endif
+
+                        <a href="/orders" class="hover:text-action-blue transition-colors">
+                            Mijn orders
+                        </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="hover:text-action-blue hover:cursor-pointer transition-colors">Uitloggen</button>
+                            </form>
                     @else
                         <a href="/login" class="hover:text-action-blue transition-colors">Inloggen</a>
                         <a href="/register" class="hover:text-action-blue transition-colors">Registreren</a>
                     @endauth
+
                 </nav>
             </div>
         </div>

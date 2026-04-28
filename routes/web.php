@@ -31,10 +31,14 @@ Route::livewire('/products/{product:slug}', 'pages::products.show');
 
 Route::livewire('/cart', 'pages::cart.overview');
 
+Route::livewire('/orders', 'pages::order.index');
+Route::livewire('/orders/{order}', 'pages::order.show');
+Route::post('/orders/{order}/pay', [CheckoutController::class, 'pay'])
+    ->name('orders.pay');
+
 Route::livewire('/checkout', 'pages::checkout.index');
 Route::get('/checkout/success', [CheckoutController::class, 'success'])
     ->name('checkout.success');
-
 Route::get('/checkout/cancel', [CheckoutController::class, 'cancel'])
     ->name('checkout.cancel');
 /**

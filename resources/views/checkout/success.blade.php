@@ -18,10 +18,19 @@
             Totaal: <strong>{{ $order->formatted_total }}</strong>
         </p>
 
-        <a href="/products"
-           class="bg-action-blue text-white px-6 py-3 rounded">
-            Verder shoppen
-        </a>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+
+            <a href="/products"
+               class="bg-action-blue text-white px-6 py-3 rounded hover:opacity-90 transition">
+                Verder shoppen
+            </a>
+
+            <a href="/orders"
+               class="border border-silver-teal text-mongo-dark-green px-6 py-3 rounded hover:border-action-blue hover:text-action-blue transition">
+                Mijn orders
+            </a>
+
+        </div>
 
     </div>
 </div>
