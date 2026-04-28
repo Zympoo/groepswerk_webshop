@@ -53,6 +53,19 @@ class CartService
             });
     }
 
+    public function clear(): void
+    {
+        if (Auth::check()) {
+            $cart = $this->getCart();
+
+            if ($cart) {
+                $cart->items()->delete();
+            }
+        } else {
+            Session::forget($this->sessionKey);
+        }
+    }
+
     public function getSession(): string
     {
         return $this->sessionKey;
