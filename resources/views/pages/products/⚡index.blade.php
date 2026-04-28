@@ -95,10 +95,14 @@ class extends Component {
                     class="bg-white border border-silver-teal rounded-[16px] shadow-forest overflow-hidden transition-transform hover:-translate-y-1 flex flex-col">
 
                     <div
-                        class="bg-light-input aspect-video p-6 flex items-center justify-center border-b border-silver-teal">
-                        <span class="text-silver-teal font-medium uppercase tracking-widest">
-                            Product_Image
-                        </span>
+                        class="bg-light-input aspect-video overflow-hidden flex items-center justify-center border-b border-silver-teal">
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                        @else
+                            <span class="text-silver-teal font-medium uppercase tracking-widest">
+                                Geen afbeelding
+                            </span>
+                        @endif
                     </div>
 
                     <div class="p-6 flex flex-col flex-1">

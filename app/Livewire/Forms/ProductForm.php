@@ -17,7 +17,7 @@ class ProductForm extends Form
     public string $description = '';
     public string $price = '';
     public string $stock = '';
-    // Skipping image upload for now or maybe leaving it empty
+    public $image;
     public bool $is_active = true;
     public bool $is_featured = false;
 
@@ -36,6 +36,7 @@ class ProductForm extends Form
             'stock' => 'required|integer|min:0',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'image' => 'nullable|image|max:2048', // Max 2MB
         ];
     }
 
