@@ -1,0 +1,60 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+
+class ProductFactory extends Factory
+{
+    protected $model = Product::class;
+
+    public function definition(): array
+    {
+        return [
+            'category_id' => Category::inRandomOrder()->first()?->id ?? Category::factory(),
+            'name' => $name = $this->faker->unique()->words(3, true),
+            'slug' => fn (array $attributes) => Str::slug($attributes['name'] ?? $name),
+            'description' => $this->faker->paragraph,
+            'price' => $this->faker->numberBetween(1000, 50000) / 100, // Decimal-safe random price
+            'stock' => $this->faker->numberBetween(0, 100),
+            'image' => fn (array $attributes) => $this->generatePlaceholderImage($attributes['name'] ?? $name),
+            'is_active' => true,
+        ];
+    }
+
+    /**
+     * Senior approach: Save placeholder image to storage and return filename.
+     */
+    private function generatePlaceholderImage(string $name): ?string
+    {
+        $directory = 'products';
+        
+        // Ensure directory exists
+        if (!Storage::disk('public')->exists($directory)) {
+            Storage::disk('public')->makeDirectory($directory);
+        }
+
+        $filename = Str::slug($name) . '.png';
+        $path = "{$directory}/{$filename}";
+
+        try {
+            // Generate realistic sneaker image from loremflickr
+            $response = Http::withoutVerifying()->get("https://loremflickr.com/600/400/sneaker");
+            
+            if ($response->successful()) {
+                Storage::disk('public')->put($path, $response->body());
+                return $path;
+            }
+        } catch (\Exception $e) {
+            // Fallback if HTTP request fails
+            return null;
+        }
+
+        return null;
+    }
+}

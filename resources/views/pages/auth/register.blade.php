@@ -59,6 +59,16 @@
             </div>
         </form>
 
+        <div class="flex flex-col gap-2">
+            <flux:button :href="route('social.redirect', 'google')" class="w-full bg-red-500 text-white">
+                Log in met Google
+            </flux:button>
+
+            <flux:button :href="route('social.redirect', 'github')" class="w-full bg-gray-900 text-white">
+                Log in met GitHub
+            </flux:button>
+        </div>
+
         <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
             <span>{{ __('Already have an account?') }}</span>
             <flux:link :href="route('login')" wire:navigate>{{ __('Log in') }}</flux:link>
