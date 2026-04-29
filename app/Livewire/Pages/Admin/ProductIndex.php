@@ -55,8 +55,8 @@ class ProductIndex extends Component
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">Productbeheer</h1>
-                        <p class="text-sm text-gray-500">Beheer je assortiment en voorraad.</p>
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Productbeheer</h1>
+                        <p class="text-sm text-gray-500 dark:text-silver-teal">Beheer je assortiment en voorraad.</p>
                     </div>
                     <flux:button href="{{ route('dashboard.products.create') }}" icon="plus" variant="primary">
                         Nieuw Product

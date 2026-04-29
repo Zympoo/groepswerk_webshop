@@ -7,17 +7,17 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div class="bg-forest-black text-white p-6 rounded-xl border border-teal-gray shadow-lg">
             <span class="tech-label text-mongo-green block mb-2">Totale Omzet</span>
-            <div class="text-3xl font-bold">€ {{ number_format($total_sales, 2, ',', '.') }}</div>
+            <div class="text-3xl font-bold">{{ $this->totalRevenue }}</div>
         </div>
 
         <div class="bg-white dark:bg-forest-black border border-silver-teal dark:border-teal-gray p-6 rounded-xl shadow-sm">
             <span class="tech-label text-mongo-dark-green dark:text-mongo-green block mb-2">Actieve Bestellingen</span>
-            <div class="text-3xl font-bold dark:text-white">{{ $active_orders }}</div>
+            <div class="text-3xl font-bold dark:text-white">{{ $this->activeOrders }}</div>
         </div>
 
         <div class="bg-white dark:bg-forest-black border border-silver-teal dark:border-teal-gray p-6 rounded-xl shadow-sm">
             <span class="tech-label text-red-600 block mb-2">Lage Voorraad</span>
-            <div class="text-3xl font-bold dark:text-white">{{ $low_stock }}</div>
+            <div class="text-3xl font-bold dark:text-white">{{ $this->lowStock }}</div>
         </div>
     </div>
 
@@ -28,10 +28,6 @@
                 class="bg-mongo-dark-green text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform">
                 Nieuw Product Toevoegen
             </a>
-            <button
-                class="bg-white dark:bg-forest-black dark:text-white border border-silver-teal dark:border-teal-gray px-6 py-3 rounded-lg font-bold hover:bg-silver-teal dark:hover:bg-teal-gray transition-colors">
-                Rapport Downloaden
-            </button>
         </div>
     </div>
 </div>
