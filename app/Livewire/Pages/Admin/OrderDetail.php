@@ -46,7 +46,7 @@ class OrderDetail extends Component
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <flux:button href="{{ route('dashboard.orders.index') }}" icon="chevron-left" variant="ghost" class="mb-2">Terug naar overzicht</flux:button>
-                        <h1 class="text-2xl font-bold text-gray-800">Bestelling Details: #{{ $order->order_number }}</h1>
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Bestelling Details: #{{ $order->order_number }}</h1>
                     </div>
                     <div>
                          @php

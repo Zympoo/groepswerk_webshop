@@ -55,8 +55,8 @@ class CategoryIndex extends Component
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">Categorieën</h1>
-                        <p class="text-sm text-gray-500">Beheer de productcategorieën van je shop.</p>
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Categorieën</h1>
+                        <p class="text-sm text-gray-500 dark:text-silver-teal">Beheer de productcategorieën van je shop.</p>
                     </div>
                     <flux:button href="{{ route('dashboard.categories.create') }}" icon="plus" variant="primary">
                         Nieuwe Categorie
