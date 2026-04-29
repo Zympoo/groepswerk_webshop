@@ -47,6 +47,16 @@ class Order extends Model
     }
 
     /**
+     * Senior Reflex: Accessor for Stripe Payment ID.
+     */
+    protected function stripePaymentId(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->stripe_payment_intent_id,
+        );
+    }
+
+    /**
      * Relationship with user.
      */
     public function user(): BelongsTo

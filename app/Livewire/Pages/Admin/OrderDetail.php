@@ -163,6 +163,26 @@ class OrderDetail extends Component
                                 @endif
                             </div>
                         </div>
+
+                        <div class="bg-white dark:bg-forest-black shadow rounded-lg border border-gray-200 dark:border-teal-gray">
+                            <div class="px-6 py-4 border-b border-gray-200 dark:border-teal-gray bg-gray-50 dark:bg-deep-teal">
+                                <h3 class="font-bold text-gray-800 dark:text-white text-lg">Betalingsinformatie</h3>
+                            </div>
+                            <div class="p-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 dark:text-silver-teal uppercase mb-1">Stripe Referentie</label>
+                                    @if($order->stripe_payment_id)
+                                        <div class="text-sm font-mono bg-slate-100 dark:bg-deep-teal p-2 rounded border border-gray-200 dark:border-teal-gray text-gray-900 dark:text-white break-all">
+                                            {{ $order->stripe_payment_id }}
+                                        </div>
+                                    @else
+                                        <div class="text-sm text-gray-500 italic">
+                                            {{ $order->status === \App\Enums\OrderStatus::PENDING ? 'Betaling in verwerking' : 'Geen referentie beschikbaar' }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
